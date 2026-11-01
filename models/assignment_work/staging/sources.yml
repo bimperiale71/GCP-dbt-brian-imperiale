@@ -3,7 +3,7 @@ sources:
   - name: raw
     description: Raw data loaded from NYC Open Data
     database: brianimperiale-cis9440
-    schema: homework1_dataset 
+    schema: nyc_homework_raw_data 
     tables:
       - name: source_service_requests_homework
         description: |
