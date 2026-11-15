@@ -11,21 +11,12 @@ cleaned AS (
        -- To do cleaning on them or explicitly cast them as types just in case
        * EXCEPT (
            restaurantinspectionid,
-           agencycode,
-           restaurantname,
-           legalbusinessname,
            businessaddress,
-           seatingchoice,
            latitude,
            longitude,
-           bbl,
-           bin,
            borough,
            inspectedon,
-           isroadwaycompliant,
-           nta,
-           postcode,
-           skippedreason
+           postcode
        ),
 
        -- Identifiers
