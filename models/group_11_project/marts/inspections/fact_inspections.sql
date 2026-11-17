@@ -19,7 +19,7 @@ dim_date AS (
     SELECT * FROM {{ ref('dim_date_details') }}
 ),
 
--- Build intiial CTE for fact table
+-- Build intial CTE for fact table
 fact_inspection_data AS (
 
     SELECT
@@ -27,8 +27,7 @@ fact_inspection_data AS (
         {{ dbt_utils.generate_surrogate_key(['s.inspection_id']) }} AS restaurant_inspection_id,
         -- Degenerate dimension (business identifier)
         s.inspection_id,
-        -- Staging guarantees created_date: a NULL key here is a bug
-        d.date_id,
+
         -- Open requests legitimately have no closed date -> unknown member
         CASE WHEN s.inspected_date IS NULL THEN '-1' ELSE d.date_id END AS inspected_on,
         -- Always will have a location key
@@ -55,7 +54,7 @@ fact_inspection_data AS (
         ON  s.borough     IS NOT DISTINCT FROM l.borough
         AND s.zip         IS NOT DISTINCT FROM l.postcode
     
-
+    -- IS NOT DISTINCT FROM so a NULL restaurantname / legabusinessname/restaurant_address matches the dim row
     LEFT JOIN dim_details bd
         ON  s.restaurantname IS NOT DISTINCT FROM bd.restaurantname
         AND s.legalbusinessname IS NOT DISTINCT FROM bd.legalbusinessname
